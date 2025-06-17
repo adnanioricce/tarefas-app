@@ -28,7 +28,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: senha123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     ports:
-      - "8080:8080"
+      - "8282:8080"
     networks:
       - tarefas-network
     restart: unless-stopped

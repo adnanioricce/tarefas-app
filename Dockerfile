@@ -1,30 +1,18 @@
-# Dockerfile multi-stage para otimizar o tamanho da imagem
-# FROM openjdk:26-jdk-slim AS builder
-FROM openjdk:26-jdk-slim
+FROM maven:3.9.9-eclipse-temurin-24 AS builder 
 
-# Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de dependências
 COPY pom.xml .
-COPY mvnw .
-COPY .mvn .mvn
 
-# Dar permissão de execução ao mvnw
-RUN chmod +x mvnw
-
+RUN mvn wrapper:wrapper
 # Baixar dependências (cache layer)
 RUN ./mvnw dependency:go-offline -B
-
 # Copiar código fonte
 COPY src src
 
 # Compilar aplicação
 RUN ./mvnw clean package -DskipTests
-
-# Stage final com imagem otimizada
-# FROM openjdk:26-jre-slim
-
+FROM openjdk:26-jdk-slim AS runtime 
 # Instalar curl para health checks
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
@@ -35,8 +23,8 @@ RUN groupadd -r spring && useradd -r -g spring spring
 WORKDIR /app
 
 # Copiar JAR da aplicação do stage anterior
-# COPY --from=builder /app/target/*.jar app.jar
-COPY /app/target/*.jar app.jar
+COPY --from=builder /app/target/*.jar app.jar
+# COPY /app/target/*.jar app.jar
 
 # Definir propriedades do usuário
 RUN chown spring:spring app.jar
