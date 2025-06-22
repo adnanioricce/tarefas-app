@@ -1,10 +1,27 @@
 pipeline {
     agent any
-    
+    triggers {
+        GenericTrigger(
+            genericVariables: [
+                [key: 'ref', value: '$.ref'],
+                [key: 'repository_name', value: '$.repository.name'],
+                [key: 'pusher_name', value: '$.pusher.name']
+            ],
+            causeString: 'Triggered by Gitea push from $pusher_name',
+            token: 'DEFAULT_API_TOKEN',
+            tokenCredentialId: '',
+            printContributedVariables: true,
+            printPostContent: true,
+            silentResponse: false,
+            regexpFilterText: '$ref',
+            regexpFilterExpression: 'refs/heads/(main|develop)'
+        )
+    }
     environment {
         // Container registry configuration
-        CONTAINER_REGISTRY = 'your-registry.com'
-        CONTAINER_REGISTRY_USERNAME = 'your-username'
+        CONTAINER_REGISTRY = 'homelab-dev:3030'
+        CONTAINER_REGISTRY_USERNAME = 'adnangonzaga'
+        PROJECT_NAME = 'tarefas-app'
         APP_NAME = 'tarefas-api'
         
         // Kubernetes configuration
@@ -43,7 +60,7 @@ pipeline {
                     ).trim()
                     
                     APP_VERSION = "${timestamp}-${gitCommit}"
-                    IMAGE_TAG = "${CONTAINER_REGISTRY}/${CONTAINER_REGISTRY_USERNAME}/${APP_NAME}:${APP_VERSION}"
+                    IMAGE_TAG = "${CONTAINER_REGISTRY}/${CONTAINER_REGISTRY_USERNAME}/${PROJECT_NAME}/${APP_NAME}:${APP_VERSION}"
                     FULL_IMAGE_NAME = IMAGE_TAG
                     
                     echo "App Version: ${APP_VERSION}"
