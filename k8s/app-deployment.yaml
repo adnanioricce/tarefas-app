@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: tarefas-api
-        image: tarefas-api:latest
+        image: gitea.adnangonzagaci.com/adnangonzaga/tarefas-app/tarefas-api:latest
         imagePullPolicy: Always
         env:
         - name: SPRING_DATASOURCE_URL
@@ -75,8 +75,9 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: traefik
   rules:
-  - host: tarefas-api.local
+  - host: tarefas.adnangonzaga.com
     http:
       paths:
       - path: /
