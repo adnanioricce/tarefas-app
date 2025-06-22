@@ -32,8 +32,9 @@ jobs:
     - name: Build the Docker image
       env:
         REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_URL }}
+        REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
       run: |
         TODAY_DATE="$(date +%s)"
-        IMAGE_NAME="$REGISTRY_URL/tarefas-app/tarefas-api:$TODAY_DATE"
+        IMAGE_NAME="$REGISTRY_URL/$REGISTRY_USER/tarefas-app/tarefas-api:$TODAY_DATE"
         docker build . --file Dockerfile --tag "$IMAGE_NAME"
         docker push $IMAGE_NAME
