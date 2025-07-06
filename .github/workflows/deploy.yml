@@ -37,8 +37,7 @@ jobs:
         TODAY_DATE="$(date +%s)"
         IMAGE_NAME="$REGISTRY_URL/$REGISTRY_USER/tarefas-app/tarefas-api:$TODAY_DATE"
         docker build . --file Dockerfile --tag "$IMAGE_NAME"
-        echo "GENERATED_IMAGE=$IMAGE_NAME"        
+        echo "GENERATED_IMAGE=$IMAGE_NAME" >> "$GITHUB_ENV"     
     - name: Push Image
-      run: |
-        
+      run: |        
         docker push $GENERATED_IMAGE
