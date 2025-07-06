@@ -34,8 +34,9 @@ jobs:
         REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_URL }}
         REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
       run: |
-        TODAY_DATE="$(date +%s)"
-        IMAGE_NAME="$REGISTRY_URL/$REGISTRY_USER/tarefas-app/tarefas-api:$TODAY_DATE"
+        TODAY_DATE="$(date +%s)"        
+        COMMIT_ID="$(echo $GITHUB_SHA | cut -c1-6)"        
+        IMAGE_NAME="$REGISTRY_URL/$REGISTRY_USER/tarefas-app/tarefas-api:$TODAY_DATE_${COMMIT_ID}"
         docker build . --file Dockerfile --tag "$IMAGE_NAME"
         echo "GENERATED_IMAGE=$IMAGE_NAME" >> "$GITHUB_ENV"     
     - name: Push Image
