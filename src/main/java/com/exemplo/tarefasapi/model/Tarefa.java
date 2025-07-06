@@ -20,15 +20,14 @@ public class Tarefa {
     private String nome;
     
     @NotNull(message = "Data de entrega é obrigatória")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "data_entrega", nullable = false)
     private LocalDate dataEntrega;
     
     @NotBlank(message = "Responsável é obrigatório")
     @Column(nullable = false)
     private String responsavel;
-    
-    // Construtores
+        
     public Tarefa() {}
     
     public Tarefa(String nome, LocalDate dataEntrega, String responsavel) {

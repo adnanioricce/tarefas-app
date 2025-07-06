@@ -11,8 +11,7 @@ import java.util.List;
 
 @Repository
 public interface TarefaRepository extends JpaRepository<Tarefa, Long> {
-    
-    // Métodos de consulta customizados
+        
     List<Tarefa> findByResponsavel(String responsavel);
     
     List<Tarefa> findByDataEntregaBetween(LocalDate dataInicio, LocalDate dataFim);

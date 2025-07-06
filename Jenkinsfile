@@ -1,3 +1,4 @@
+// TODO: Ainda planejo utilizar isso no futuro, mas por enquanto só quero entregar o trabalho.
 pipeline {
     agent any
     triggers {

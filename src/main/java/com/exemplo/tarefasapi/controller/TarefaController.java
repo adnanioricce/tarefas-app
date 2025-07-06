@@ -19,7 +19,7 @@ public class TarefaController {
     @Autowired
     private TarefaRepository tarefaRepository;
     
-    // Criar uma nova tarefa
+    
     @PostMapping
     public ResponseEntity<Tarefa> criarTarefa(@Valid @RequestBody Tarefa tarefa) {
         try {
@@ -30,7 +30,7 @@ public class TarefaController {
         }
     }
     
-    // Consultar todas as tarefas
+    
     @GetMapping
     public ResponseEntity<List<Tarefa>> obterTodasTarefas() {
         try {
@@ -44,7 +44,6 @@ public class TarefaController {
         }
     }
     
-    // Consultar uma tarefa específica pelo ID
     @GetMapping("/{id}")
     public ResponseEntity<Tarefa> obterTarefaPorId(@PathVariable("id") Long id) {
         Optional<Tarefa> tarefa = tarefaRepository.findById(id);
@@ -55,8 +54,7 @@ public class TarefaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
-    // Atualizar uma tarefa existente
+        
     @PutMapping("/{id}")
     public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable("id") Long id, 
                                                   @Valid @RequestBody Tarefa tarefaAtualizada) {
@@ -73,8 +71,7 @@ public class TarefaController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    
-    // Remover uma tarefa
+        
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> removerTarefa(@PathVariable("id") Long id) {
         try {
@@ -89,8 +86,7 @@ public class TarefaController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    // Consultar tarefas por responsável
+        
     @GetMapping("/responsavel/{responsavel}")
     public ResponseEntity<List<Tarefa>> obterTarefasPorResponsavel(@PathVariable("responsavel") String responsavel) {
         try {
